@@ -29,8 +29,13 @@ const Auth = () => {
   }, [navigate]);
 
   const handleSignUp = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
+  e.preventDefault();
+
+  // Add this validation check
+  if (password.length < 6) {
+    toast.error("Password must be at least 6 characters long.");
+    return;
+  }
     
     try {
       const { error } = await supabase.auth.signUp({
